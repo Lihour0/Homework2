@@ -8,14 +8,26 @@ void InputOnlyNum()
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-template <typename T> T monthlyPay(T totalpay, uint year)
+template <typename T> bool NotNegative(T input)
+{
+    if (!(input >= 0))
+    {
+        std::cout << "This input can't be negative\n";
+        return true;
+    }
+    return false;
+}
+
+template <typename T> T monthlyPay(T totalpay, int year)
 {
     return totalpay / (year * 12);
 }
-template <typename T> T totalAmount(T yearlyInterestRate, T totalLoan, uint year)
+
+template <typename T> T totalAmount(T yearlyInterestRate, T loan, int year)
 {
-    return (totalLoan * year) + (totalLoan * year * (yearlyInterestRate / 100.));
+    return (loan) + ((loan * year * yearlyInterestRate) / 100);
 }
+
 template <typename T> T totalInterestPay(T totalAmount, T loanAmount)
 {
     return totalAmount - loanAmount;
@@ -23,37 +35,37 @@ template <typename T> T totalInterestPay(T totalAmount, T loanAmount)
 
 int main()
 {
-    double totalLoan = 0;
+    double loan = 0;
     double yearlyInterestRate = 0;
     double monthlyPayment = 0;
     double totalPayment = 0;
     double totalInterestPayment = 0;
-    uint year = 0;
+    int year = 0;
     const int LEFT_FILL = 24;
     const int RIGHT_FILL = 0;
 
     std::cout << "Total Loan: ";
-    while (!(std::cin >> totalLoan))
+    while (!(std::cin >> loan || NotNegative(loan)))
     {
         InputOnlyNum();
         std::cout << "Total Loan: ";
     }
     std::cout << "Yearly Interest Rate: ";
-    while (!(std::cin >> yearlyInterestRate))
+    while (!(std::cin >> yearlyInterestRate) || NotNegative(yearlyInterestRate))
     {
         InputOnlyNum();
         std::cout << "Yearly Interest Rate: ";
     }
     std::cout << "Number of Year: ";
-    while (!(std::cin >> year))
+    while (!(std::cin >> year) || NotNegative(year))
     {
         InputOnlyNum();
         std::cout << "Number of Year : ";
     }
 
-    totalPayment = totalAmount(yearlyInterestRate, totalLoan, year);
+    totalPayment = totalAmount(yearlyInterestRate, loan, year);
     monthlyPayment = monthlyPay(totalPayment, year);
-    totalInterestPayment = totalInterestPay(totalPayment, totalLoan);
+    totalInterestPayment = totalInterestPay(totalPayment, loan);
 
     std::cout << std::fixed << std::showpoint << std::setprecision(2);
 
@@ -61,7 +73,7 @@ int main()
               << "\n";
 
     std::cout << std::setfill('.') << std::left << std::setw(LEFT_FILL) << "Loan Amount ";
-    std::cout << std::setfill(' ') << std::right << std::setw(RIGHT_FILL) << ": $" << totalLoan << "\n";
+    std::cout << std::setfill(' ') << std::right << std::setw(RIGHT_FILL) << ": $" << loan << "\n";
 
     std::cout << std::setfill('.') << std::left << std::setw(LEFT_FILL) << "Monthly Payment ";
     std::cout << std::setfill(' ') << std::right << std::setw(RIGHT_FILL) << ": $" << monthlyPayment << "\n";
