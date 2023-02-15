@@ -10,6 +10,16 @@ void InputOnlyNum()
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
+template <typename T> bool NotNegative(T input)
+{
+    if (!(input >= 0))
+    {
+        std::cout << "This can't be negative\n";
+        return true;
+    }
+    return false;
+}
+
 template <typename T> T tax(T income, T percentageTax)
 {
     return income * (percentageTax / 100.);
@@ -37,7 +47,7 @@ int main()
     getline(std::cin, userName);
 
     std::cout << "Gross Income: ";
-    while (!(std::cin >> Income))
+    while (!(std::cin >> Income) || NotNegative(Income))
     {
         InputOnlyNum();
         std::cout << "Total Loan: ";
