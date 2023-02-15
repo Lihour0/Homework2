@@ -45,7 +45,7 @@ int main()
     const int RIGHT_FILL = 0;
 
     std::cout << "Total Loan: ";
-    while (!(std::cin >> loan || NotNegative(loan)))
+    while (!(std::cin >> loan) || NotNegative(loan))
     {
         InputOnlyNum();
         std::cout << "Total Loan: ";
