@@ -10,7 +10,17 @@ void InputOnlyNum()
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-template <typename T> double gross(T ticketprice, uint totalticket)
+template <typename T> bool NotNegative(T input)
+{
+    if (!(input >= 0))
+    {
+        std::cout << "This input can't be negative\n";
+        return true;
+    }
+    return false;
+}
+
+template <typename T> double gross(T ticketprice, int totalticket)
 {
     return ticketprice * totalticket;
 }
@@ -20,7 +30,7 @@ template <typename T> double totalTicket(T A_ticket, T B_ticket)
     return A_ticket + B_ticket;
 }
 
-template <typename T> double amountDonate(T grossAmount, uint percentDonated)
+template <typename T> double amountDonate(T grossAmount, int percentDonated)
 {
     return grossAmount * percentDonated / 100;
 }
@@ -29,6 +39,7 @@ template <typename T> double net_Sale(T grossAmount, T amountDonated)
 {
     return grossAmount - amountDonated;
 }
+
 int main()
 {
     std::string movieName;
@@ -37,10 +48,10 @@ int main()
     double amountDonated = 0;
     double netSale = 0;
     double grossAmount = 0;
-    uint donatedPercentage = 0;
-    uint totalAdultTicketSold = 0;
-    uint totalKidTicketSold = 0;
-    uint totalTicketSold = 0;
+    int donatedPercentage = 0;
+    int totalAdultTicketSold = 0;
+    int totalKidTicketSold = 0;
+    int totalTicketSold = 0;
     const int LEFT_FILL = 35;
     const int RIGHT_FILL = 7;
 
@@ -51,35 +62,35 @@ int main()
     getline(std::cin, movieName);
 
     std::cout << "Adult ticket price: ";
-    while (!(std::cin >> adultTicketPrice))
+    while (!(std::cin >> adultTicketPrice) || NotNegative(adultTicketPrice))
     {
         InputOnlyNum();
         std::cout << "Adult ticket price: ";
     }
 
     std::cout << "Child ticket price: ";
-    while (!(std::cin >> childTicketPrice))
+    while (!(std::cin >> childTicketPrice) || NotNegative(childTicketPrice))
     {
         InputOnlyNum();
         std::cout << "Child ticket price: ";
     }
 
     std::cout << "Number of adult tickets sold: ";
-    while (!(std::cin >> totalAdultTicketSold))
+    while (!(std::cin >> totalAdultTicketSold) || NotNegative(totalAdultTicketSold))
     {
         InputOnlyNum();
         std::cout << "Number of adult tickets sold: ";
     }
 
     std::cout << "Number of child tickets sold: ";
-    while (!(std::cin >> totalKidTicketSold))
+    while (!(std::cin >> totalKidTicketSold) || NotNegative(totalKidTicketSold))
     {
         InputOnlyNum();
         std::cout << "Number of child tickets sold: ";
     }
 
     std::cout << "Percentage of gross amount to be donated: ";
-    while (!(std::cin >> donatedPercentage))
+    while (!(std::cin >> donatedPercentage) || NotNegative(donatedPercentage))
     {
         std::cout << "Percentage of gross amount to be donated: ";
         InputOnlyNum();
